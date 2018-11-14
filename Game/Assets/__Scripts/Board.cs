@@ -24,7 +24,9 @@ public class Board : MonoBehaviour {
             {
                 //Adapted from https://gamedev.stackexchange.com/questions/128398/why-does-the-unity-manual-add-quaternion-identity-to-an-instantiated-object
                 Vector2 tempPosition = new Vector2(i, j);
-                Instantiate(tilePrefab, tempPosition, Quaternion.identity);
+                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                backgroundTile.transform.parent = this.transform; //This puts the grid pieces in the board hireacrchy
+                backgroundTile.name = "( " + i + ", " + j + " )"; //This names the grid locations
             }
         }
     }
