@@ -9,9 +9,10 @@ public class Board : MonoBehaviour {
     public int height; //height of board
     public GameObject tilePrefab;
     private BackgroundTile[,] allTiles;
+    public GameObject[] dots;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         allTiles = new BackgroundTile[width, height]; //size of the grid
         SetUp();
     }
@@ -27,6 +28,12 @@ public class Board : MonoBehaviour {
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform; //This puts the grid pieces in the board hireacrchy
                 backgroundTile.name = "( " + i + ", " + j + " )"; //This names the grid locations
+
+                //Crate dots
+                int dotToUse = Random.Range(0, dots.Length);
+                GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                dot.transform.parent = this.transform; //Put in hirearchy
+                dot.name = "( " + i + ", " + j + " )";
             }
         }
     }
