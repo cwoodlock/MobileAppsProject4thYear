@@ -10,10 +10,12 @@ public class Board : MonoBehaviour {
     public GameObject tilePrefab;
     private BackgroundTile[,] allTiles;
     public GameObject[] dots;
+    public GameObject[,] allDots;
 
     // Use this for initialization
     void Start () {
         allTiles = new BackgroundTile[width, height]; //size of the grid
+        allDots = new GameObject[width, height];
         SetUp();
     }
 	
@@ -34,6 +36,9 @@ public class Board : MonoBehaviour {
                 GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
                 dot.transform.parent = this.transform; //Put in hirearchy
                 dot.name = "( " + i + ", " + j + " )";
+
+                //Add dots to array
+                allDots[i, j] = dot;
             }
         }
     }
