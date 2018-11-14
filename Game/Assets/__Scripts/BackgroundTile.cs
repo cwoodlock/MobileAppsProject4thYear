@@ -8,7 +8,7 @@ public class BackgroundTile : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Initialise();
+       
 	}
 	
 	// Update is called once per frame
