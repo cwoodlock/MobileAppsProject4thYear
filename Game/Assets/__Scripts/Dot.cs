@@ -17,6 +17,7 @@ public class Dot : MonoBehaviour
     public int row;
     public int targetX;
     public int targetY;
+    public bool isMatched = false;
 
 
     // Use this for initialization
@@ -30,8 +31,18 @@ public class Dot : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update()        
     {
+        //Try and find matches
+        FindMatches();
+
+        //Check matches
+        if (isMatched)
+        {
+            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
+            mySprite.color = new Color(0f, 0f, 0f, 0.2f); //change transperity of the dot
+        }
+
         targetX = column;
         targetY = row;
         //*******Change Left and right************
@@ -122,6 +133,37 @@ public class Dot : MonoBehaviour
             otherDot = board.allDots[column, row-1]; //get dot thats to the right
             otherDot.GetComponent<Dot>().row += 1; //get dot scrit for that dot and change the column
             row -= 1; //increase selected dot
+        }
+    }
+
+    void FindMatches()
+    {
+        if(column > 0 && column < board.width - 1) //check left and right
+        {
+            GameObject leftDot1 = board.allDots[column - 1, row];
+            GameObject rightDot1 = board.allDots[column + 1, row];
+
+            //https://docs.unity3d.com/Manual/Tags.html
+            if (leftDot1.tag == this.gameObject.tag && rightDot1.tag == this.gameObject.tag)
+            {
+                leftDot1.GetComponent<Dot>().isMatched = true;
+                rightDot1.GetComponent<Dot>().isMatched = true;
+                isMatched = true;
+            }
+        }
+
+        if (row > 0 && row < board.height - 1) //check up and down
+        {
+            GameObject upDot1 = board.allDots[column , row +1];
+            GameObject downDot1 = board.allDots[column , row -1];
+
+            //https://docs.unity3d.com/Manual/Tags.html
+            if (upDot1.tag == this.gameObject.tag && downDot1.tag == this.gameObject.tag)
+            {
+                upDot1.GetComponent<Dot>().isMatched = true;
+                downDot1.GetComponent<Dot>().isMatched = true;
+                isMatched = true;
+            }
         }
     }
 }
