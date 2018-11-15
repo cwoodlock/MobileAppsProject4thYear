@@ -18,16 +18,24 @@ public class Dot : MonoBehaviour
     public int targetX;
     public int targetY;
     public bool isMatched = false;
+    public int previousColumn;
+    public int previousRow;
 
 
     // Use this for initialization
     void Start()
     {
+        //get a handle on the board
         board = FindObjectOfType<Board>();
+
         targetX = (int)transform.position.x;
         targetY = (int)transform.position.y;
         row = targetY;
         column = targetX;
+
+        previousRow = row;
+        previousColumn = column;
+
     }
 
     // Update is called once per frame
@@ -105,7 +113,7 @@ public class Dot : MonoBehaviour
 
     void MovePieces()
     {
-        if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width)
+        if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width -1)
         {
             //Right swipe
             otherDot = board.allDots[column + 1, row]; //get dot thats to the right
@@ -113,7 +121,7 @@ public class Dot : MonoBehaviour
             column += 1; //increase selected dot
 
         }
-        else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height)
+        else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height -1)
         {
             //up swipe
             otherDot = board.allDots[column, row+1]; //get dot thats to the right
