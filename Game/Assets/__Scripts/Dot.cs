@@ -142,6 +142,9 @@ public class Dot : MonoBehaviour
             otherDot.GetComponent<Dot>().row += 1; //get dot scrit for that dot and change the column
             row -= 1; //increase selected dot
         }
+
+        //check to see if there are matches
+        StartCoroutine(CheckMoveCo());
     }
 
     void FindMatches()
@@ -172,6 +175,25 @@ public class Dot : MonoBehaviour
                 downDot1.GetComponent<Dot>().isMatched = true;
                 isMatched = true;
             }
+        }
+    }
+    //coroutine requires a return statement https://docs.unity3d.com/Manual/Coroutines.html
+    public IEnumerator CheckMoveCo()
+    {
+        yield return new WaitForSeconds(.5f);
+        if(otherDot != null) //check if pieces matched
+        {
+            if(!isMatched && !otherDot.GetComponent<Dot>().isMatched)
+            {
+                //change dot back when its not matched
+                otherDot.GetComponent<Dot>().row = row;
+                otherDot.GetComponent<Dot>().column = column;
+
+                row = previousRow;
+                column = previousColumn;
+            }
+
+            otherDot = null;
         }
     }
 }
