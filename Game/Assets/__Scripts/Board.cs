@@ -31,14 +31,14 @@ public class Board : MonoBehaviour {
                 backgroundTile.transform.parent = this.transform; //This puts the grid pieces in the board hireacrchy
                 backgroundTile.name = "( " + i + ", " + j + " )"; //This names the grid locations
 
-                //Crate dots, it now 
+                //Crate dots, it now generates the board without matches
                 int dotToUse = Random.Range(0, dots.Length);
                 int maxIterations = 0;
                 while (MatchesAt(i, j, dots[dotToUse]))
                 {
                     dotToUse = Random.Range(0, dots.Length);
                     maxIterations++;
-                    Debug.Log(maxIterations);
+                    //Debug.Log(maxIterations);
                 }
 
                 GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
@@ -85,5 +85,31 @@ public class Board : MonoBehaviour {
         }
 
         return false;
+    }
+
+    //This will destroy matched dots
+    private void DestroyMatchesAt(int column, int row)
+    {
+        if (allDots[column, row].GetComponent<Dot>().isMatched)
+        {
+            Destroy(allDots[column, row]);
+            allDots[column, row] = null;
+        }
+    }
+
+    public void DestroyMatches()
+    {
+        //Cycle through all the pieces on the board
+        for(int i =0; i < width; i++)
+        {
+            for(int j = 0; j < height; j++)
+            {
+                //if there is an object in array
+                if(allDots[i,j] != null)
+                {
+                    DestroyMatchesAt(i, j);
+                }
+            }
+        }
     }
 }
