@@ -59,15 +59,19 @@ public class Dot : MonoBehaviour
             //move towards the target
             tempPosition = new Vector2(targetX, transform.position.y);
             //https://docs.unity3d.com/ScriptReference/Vector2.Lerp.html
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
-
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            if(board.allDots[column, row] != this.gameObject)
+            {
+                //set colum,row as this object
+                board.allDots[column, row] = this.gameObject;
+            }
         }
         else
         {
             //Directly set the position
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = tempPosition;
-            board.allDots[column, row] = this.gameObject;
+            
         }
         //*********Change Up and down ***********
         if (Mathf.Abs(targetY - transform.position.y) > .1)
@@ -75,15 +79,19 @@ public class Dot : MonoBehaviour
             //move towards the target
             tempPosition = new Vector2(transform.position.x, targetY);
             //https://docs.unity3d.com/ScriptReference/Vector2.Lerp.html
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
-
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            if (board.allDots[column, row] != this.gameObject)
+            {
+                //set colum,row as this object
+                board.allDots[column, row] = this.gameObject;
+            }
         }
         else
         {
             //Directly set the position
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = tempPosition;
-            board.allDots[column, row] = this.gameObject;
+            
         }
     }
 

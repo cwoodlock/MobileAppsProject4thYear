@@ -111,5 +111,87 @@ public class Board : MonoBehaviour {
                 }
             }
         }
+        //find if anything needs to be decreased when there is a match
+        StartCoroutine(DecreaseRowCo());
+    }
+
+    //Coroutine to drop the dots 
+    private IEnumerator DecreaseRowCo()
+    {
+        int nullCount = 0;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if(allDots[i,j] == null)
+                {
+                    //increase null counts
+                    nullCount++;
+                } else if(nullCount > 0)
+                {
+                    allDots[i, j].GetComponent<Dot>().row -= nullCount;
+                    //fix dot position
+                    allDots[i, j] = null;
+                }
+                
+            }
+            //reset the nullcount
+            nullCount = 0;
+        }
+        //pause to refil the board
+        yield return new WaitForSeconds(.4f);
+        StartCoroutine(FillBoardCo());
+    }
+
+    //Refill the board after dots are removed and dots are dropped down
+    private void RefillBoard()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if(allDots[i, j] == null)
+                {
+                    //Checks through all of the pieces and checks if null 
+                    Vector2 tempPosition = new Vector2(i, j);
+                    int dotToUse = Random.Range(0, dots.Length);
+                    GameObject piece = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                    allDots[i, j] = piece;
+                }
+            }
+        }
+    }
+
+    //Check if there are any current matches on the board 
+    private bool MatchesOnBoard()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if(allDots[i, j] != null)
+                {
+                    if(allDots[i, j].GetComponent<Dot>().isMatched)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    //CoRoutine to use refillboard and matchesonboard to fill the board constantly
+    private IEnumerator FillBoardCo()
+    {
+        RefillBoard();
+        //pause to refill board
+        yield return new WaitForSeconds(.5f);
+
+        while (MatchesOnBoard())
+        {
+            yield return new WaitForSeconds(.5f);
+            DestroyMatches();
+        }
     }
 }
