@@ -99,47 +99,54 @@ public class Dot : MonoBehaviour
     private void OnMouseUp()
     {
         finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Debug.Log(firstTouchPosition);
+        Debug.Log(firstTouchPosition);
         CalculateAngle();
     }
 
     //get the angle between the presses
     void CalculateAngle()
     {
-        swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, firstTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI; //returns value in radians so must multiple by 180/PI
-        //Debug.Log(swipeAngle);
+        swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, 
+                                 firstTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI; //returns value in radians so must multiple by 180/PI
+
         MovePieces();
     }
 
     void MovePieces()
+        //Send damien this code
     {
+        if ((swipeAngle > 135 && swipeAngle <= -135) && column > 0)
+        {
+            Debug.Log("Swipe left");
+            //left swipe
+            otherDot = board.allDots[column - 1, row]; //get dot thats to the right
+            otherDot.GetComponent<Dot>().column += 1; //get dot script for that dot and change the column
+            column -= 1; //increase selected dot
+        }
         if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width -1)
         {
+            Debug.Log("Swipe right");
             //Right swipe
             otherDot = board.allDots[column + 1, row]; //get dot thats to the right
-            otherDot.GetComponent<Dot>().column -= 1; //get dot scrit for that dot and change the column
+            otherDot.GetComponent<Dot>().column -= 1; //get dot script for that dot and change the column
             column += 1; //increase selected dot
 
         }
-        else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height -1)
+        if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height -1)
         {
+            Debug.Log("Swipe up");
             //up swipe
             otherDot = board.allDots[column, row+1]; //get dot thats to the right
-            otherDot.GetComponent<Dot>().row -= 1; //get dot scrit for that dot and change the column
+            otherDot.GetComponent<Dot>().row -= 1; //get dot script for that dot and change the column
             row += 1; //increase selected dot
         }
-        else if ((swipeAngle > 135 || swipeAngle <= -135 ) && column > 0)
+
+        if ((swipeAngle < -45 && swipeAngle >= -135) && row > 0)
         {
-            //left swipe
-            otherDot = board.allDots[column - 1, row]; //get dot thats to the right
-            otherDot.GetComponent<Dot>().column += 1; //get dot scrit for that dot and change the column
-            column -= 1; //increase selected dot
-        }
-        else if (swipeAngle > -45 && swipeAngle >= -135 && row > 0)
-        {
-            //Left swipe
+            Debug.Log("Swipe down");
+            //down swipe
             otherDot = board.allDots[column, row-1]; //get dot thats to the right
-            otherDot.GetComponent<Dot>().row += 1; //get dot scrit for that dot and change the column
+            otherDot.GetComponent<Dot>().row += 1; //get dot script for that dot and change the column
             row -= 1; //increase selected dot
         }
 
