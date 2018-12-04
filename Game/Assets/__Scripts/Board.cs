@@ -219,6 +219,7 @@ public class Board : MonoBehaviour {
         //Check for deadlock
         if (IsDeadlocked())
         {
+            ShuffleBoard();
             Debug.Log("Deadlocked!");
         }
         currentState = GameState.move;
@@ -295,23 +296,22 @@ public class Board : MonoBehaviour {
     //Go through every piece on board switch right and check and then switch up and check
     private bool IsDeadlocked()
     {
-        for(int i = 0; i < width; i++)
+        for (int i = 0; i < width; i++)
         {
-            for(int j = 0; i < height; i++)
+            for (int j = 0; j < height; j++)
             {
-                //Check if not null
-                if(allDots[i, j] != null)
+                if (allDots[i, j] != null)
                 {
-                    if(i < width - 1)
+                    if (i < width - 1)
                     {
-                        if(SwitchAndCheck(i ,j, Vector2.right))
+                        if (SwitchAndCheck(i, j, Vector2.right))
                         {
                             return false;
                         }
                     }
-                    if(j < height - 1)
+                    if (j < height - 1)
                     {
-                        if(SwitchAndCheck(i, j , Vector2.up))
+                        if (SwitchAndCheck(i, j, Vector2.up))
                         {
                             return false;
                         }
@@ -320,5 +320,58 @@ public class Board : MonoBehaviour {
             }
         }
         return true;
+    }
+
+    //Function to Shuffle the board if it is deadlocked
+    private void ShuffleBoard()
+    {
+        //Create a list of game objects
+        List<GameObject> newBoard = new List<GameObject>();
+
+        //Add every piece to this list
+        for(int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                if(allDots[i, j] != null)
+                {
+                    newBoard.Add(allDots[i, j]);
+                }
+            }
+        }
+
+        //For every spot on the board 
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                //Pick a random number 
+                int pieceToUse = Random.Range(0, newBoard.Count);
+                int maxIterations = 0;
+
+                while (MatchesAt(i, j, newBoard[pieceToUse]) && maxIterations < 100)
+                { 
+                
+                    pieceToUse = Random.Range(0, newBoard.Count);
+                    maxIterations++;
+                    Debug.Log(maxIterations);
+                }
+                maxIterations = 0;
+                //Make a container for the oiece
+                Dot piece = newBoard[pieceToUse].GetComponent<Dot>();
+                //Assign the colum and row to piece
+                piece.column = i;
+                piece.row = j;
+                //Fill in the dots array with new piece
+                allDots[i, j] = newBoard[pieceToUse];
+                //Remove it from the list
+                newBoard.Remove(newBoard[pieceToUse]);
+            }
+        }
+        //Check if it still deadlocked
+        if (IsDeadlocked())
+        {
+            ShuffleBoard(); //This could cause an infinite loop however it is unlikely
+        }
     }
 }
