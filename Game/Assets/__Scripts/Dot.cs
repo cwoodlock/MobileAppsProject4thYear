@@ -20,6 +20,7 @@ public class Dot : MonoBehaviour
     public bool isMatched = false;
     public int previousColumn;
     public int previousRow;
+    public float swipeResist = 1f;
 
 
     // Use this for initialization
@@ -28,13 +29,13 @@ public class Dot : MonoBehaviour
         //get a handle on the board
         board = FindObjectOfType<Board>();
 
-        targetX = (int)transform.position.x;
-        targetY = (int)transform.position.y;
-        row = targetY;
-        column = targetX;
+        //targetX = (int)transform.position.x;
+        //targetY = (int)transform.position.y;
+       // row = targetY;
+       // column = targetX;
 
-        previousRow = row;
-        previousColumn = column;
+       // previousRow = row;
+       // previousColumn = column;
 
     }
 
@@ -99,25 +100,41 @@ public class Dot : MonoBehaviour
     private void OnMouseDown()
     {
         //https://docs.unity3d.com/ScriptReference/Camera.ViewportToWorldPoint.html
-        firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Can only move if its in the move state
+        if(board.currentState == GameState.move)
+        {
+            firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
         //Debug.Log(firstTouchPosition);
     }
 
     //get final position of the mouse when it is release
     private void OnMouseUp()
     {
-        finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(firstTouchPosition);
-        CalculateAngle();
+        if (board.currentState == GameState.move)
+        {
+            finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Debug.Log(firstTouchPosition);
+            CalculateAngle();
+        }
+        
     }
 
     //get the angle between the presses
     void CalculateAngle()
     {
-        swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, 
-                                 firstTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI; //returns value in radians so must multiple by 180/PI
+        if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist || Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
+        {
+            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
+            MovePieces();
+            board.currentState = GameState.wait;
 
-        MovePieces();
+        }
+        else
+        {
+            board.currentState = GameState.move;
+
+        }
     }
 
     void MovePieces()
@@ -128,6 +145,8 @@ public class Dot : MonoBehaviour
             Debug.Log("Swipe left");
             //left swipe
             otherDot = board.allDots[column - 1, row]; //get dot thats to the right
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Dot>().column += 1; //get dot script for that dot and change the column
             column -= 1; //increase selected dot
         }
@@ -136,6 +155,8 @@ public class Dot : MonoBehaviour
             Debug.Log("Swipe right");
             //Right swipe
             otherDot = board.allDots[column + 1, row]; //get dot thats to the right
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Dot>().column -= 1; //get dot script for that dot and change the column
             column += 1; //increase selected dot
 
@@ -145,6 +166,8 @@ public class Dot : MonoBehaviour
             Debug.Log("Swipe up");
             //up swipe
             otherDot = board.allDots[column, row+1]; //get dot thats to the right
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Dot>().row -= 1; //get dot script for that dot and change the column
             row += 1; //increase selected dot
         }
@@ -154,6 +177,8 @@ public class Dot : MonoBehaviour
             Debug.Log("Swipe down");
             //down swipe
             otherDot = board.allDots[column, row-1]; //get dot thats to the right
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Dot>().row += 1; //get dot script for that dot and change the column
             row -= 1; //increase selected dot
         }
@@ -211,6 +236,9 @@ public class Dot : MonoBehaviour
 
                 row = previousRow;
                 column = previousColumn;
+
+                yield return new WaitForSeconds(.5f);
+                board.currentState = GameState.move;
             }
             else
             {
