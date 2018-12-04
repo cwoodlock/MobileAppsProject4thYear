@@ -20,6 +20,7 @@ public class Board : MonoBehaviour {
     public GameObject[,] allDots;
     public int offSet; //To be used to spawn in dots to slide into place
     public GameState currentState = GameState.move;
+    public GameObject destroyEffect; //Used to import the particle effect to destroy the dots
 
     // Use this for initialization
     void Start () {
@@ -104,6 +105,9 @@ public class Board : MonoBehaviour {
     {
         if (allDots[column, row].GetComponent<Dot>().isMatched)
         {
+            GameObject particle = Instantiate(destroyEffect, allDots[column, row].transform.position,Quaternion.identity);
+            //Destroy the particle after .5f
+            Destroy(particle, .5f);
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
         }
