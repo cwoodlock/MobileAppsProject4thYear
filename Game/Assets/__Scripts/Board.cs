@@ -215,6 +215,110 @@ public class Board : MonoBehaviour {
 
         //wait after we make some movements
         yield return new WaitForSeconds(.5f);
+
+        //Check for deadlock
+        if (IsDeadlocked())
+        {
+            Debug.Log("Deadlocked!");
+        }
         currentState = GameState.move;
+    }
+
+    //Starting to detect Deadlock
+    private void SwitchPieces(int column, int row, Vector2 direction)
+    {
+        //Take the second piece and save it in a holder
+        GameObject holder = allDots[column + (int)direction.x, row + (int)direction.y] as GameObject;
+        //switchimh the first dot to be the second position
+        allDots[column + (int)direction.x, row + (int)direction.y] = allDots[column, row];
+        //Set the first dot to be the second dot
+        allDots[column, row] = holder;
+    }
+
+    private bool CheckForMatches()
+    {
+        for(int i = 0; i < width; i++)
+        {
+            for(int j = 0; j < height; j++)
+            {
+                //check if empty space 
+                if(allDots[i,j] != null)
+                {
+                    //Make sure that one and two to the right are in the board
+                    if (i < width - 2)
+                    {
+                        //check right and two dots to the right exist
+                        if (allDots[i + +1, j] != null && allDots[i + 2, j] != null)
+                        {
+                            if (allDots[i + 1, j].tag == allDots[i, j].tag
+                                && allDots[i + 2, j].tag == allDots[i, j].tag)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    //make sure that one and two up are in the board
+                    if (j < height - 2)
+                    {
+                        //Check up if dots exist and have same tags
+                        if (allDots[i, j + 1] != null && allDots[i, j + 2] != null)
+                        {
+                            if (allDots[i, j + 1].tag == allDots[i, j].tag
+                                && allDots[i, j + 2].tag == allDots[i, j].tag)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    //Switch and check the pieces
+    private bool SwitchAndCheck(int column, int row, Vector2 direction)
+    {
+        //switch piece up or down
+        SwitchPieces(column, row, direction);
+        //check for matches
+        if (CheckForMatches())
+        {
+            //if it matches switch them back
+            SwitchPieces(column, row, direction);
+            return true;
+        }
+        SwitchPieces(column, row, direction);
+        return false;
+    }
+
+    //Go through every piece on board switch right and check and then switch up and check
+    private bool IsDeadlocked()
+    {
+        for(int i = 0; i < width; i++)
+        {
+            for(int j = 0; i < height; i++)
+            {
+                //Check if not null
+                if(allDots[i, j] != null)
+                {
+                    if(i < width - 1)
+                    {
+                        if(SwitchAndCheck(i ,j, Vector2.right))
+                        {
+                            return false;
+                        }
+                    }
+                    if(j < height - 1)
+                    {
+                        if(SwitchAndCheck(i, j , Vector2.up))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

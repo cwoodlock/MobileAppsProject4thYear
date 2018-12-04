@@ -217,8 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95167ba3ee12ddf4a8196b17be8f534e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 7
-  height: 10
+  width: 5
+  height: 5
   tilePrefab: {fileID: 1267939110247262, guid: 01b1d558fa5536e4689f974f8792550e, type: 2}
   dots:
   - {fileID: 1938927290703804, guid: bc854708c21b2ad409df4cbdcf3bbd65, type: 2}
