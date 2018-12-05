@@ -21,9 +21,15 @@ public class Board : MonoBehaviour {
     public int offSet; //To be used to spawn in dots to slide into place
     public GameState currentState = GameState.move;
     public GameObject destroyEffect; //Used to import the particle effect to destroy the dots
+    public int basePieceValue = 20;
+    public int[] scoreGoals;
+
+    private ScoreManager scoreManager;
+    private int streakValue = 1;
 
     // Use this for initialization
     void Start () {
+        scoreManager = FindObjectOfType<ScoreManager>();
         allTiles = new BackgroundTile[width, height]; //size of the grid
         allDots = new GameObject[width, height];
         SetUp();
@@ -109,6 +115,7 @@ public class Board : MonoBehaviour {
             //Destroy the particle after .5f
             Destroy(particle, .5f);
             Destroy(allDots[column, row]);
+            scoreManager.IncreaseScore(basePieceValue * streakValue);
             allDots[column, row] = null;
         }
     }
@@ -209,6 +216,7 @@ public class Board : MonoBehaviour {
 
         while (MatchesOnBoard())
         {
+            streakValue++;
             yield return new WaitForSeconds(.5f);
             DestroyMatches();
         }
@@ -223,6 +231,7 @@ public class Board : MonoBehaviour {
             Debug.Log("Deadlocked!");
         }
         currentState = GameState.move;
+        streakValue = 1;
     }
 
     //Starting to detect Deadlock
