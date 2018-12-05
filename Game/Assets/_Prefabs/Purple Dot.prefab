@@ -76,6 +76,7 @@ MonoBehaviour:
   isMatched: 0
   previousColumn: 0
   previousRow: 0
+  swipeResist: 1
 --- !u!212 &212644512626065758
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -111,8 +112,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6ee90b24b4b3d80469c417aa053ace1d, type: 3}
-  m_Color: {r: 0.8207547, g: 0.3445621, b: 0.8207547, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 90c6b601867c259448d2c32bc2f8f6b7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

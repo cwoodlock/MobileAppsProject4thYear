@@ -11,6 +11,7 @@ public class Dot : MonoBehaviour
     private GameObject otherDot;
     private Board board;
     private Vector2 tempPosition;
+    private HintManager hintManager;
 
     public float swipeAngle = 0;
     public int column;
@@ -31,12 +32,12 @@ public class Dot : MonoBehaviour
 
         //targetX = (int)transform.position.x;
         //targetY = (int)transform.position.y;
-       // row = targetY;
-       // column = targetX;
+        // row = targetY;
+        // column = targetX;
 
-       // previousRow = row;
-       // previousColumn = column;
-
+        // previousRow = row;
+        // previousColumn = column;
+        hintManager = FindObjectOfType<HintManager>();
     }
 
     // Update is called once per frame
@@ -99,6 +100,12 @@ public class Dot : MonoBehaviour
     //Get positon of the mouse when pressed 
     private void OnMouseDown()
     {
+        //Destroy the Hint
+        if(hintManager != null)
+        {
+            hintManager.DestroyHint();
+        }
+
         //https://docs.unity3d.com/ScriptReference/Camera.ViewportToWorldPoint.html
         //Can only move if its in the move state
         if(board.currentState == GameState.move)

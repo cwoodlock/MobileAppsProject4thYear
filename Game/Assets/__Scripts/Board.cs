@@ -278,7 +278,7 @@ public class Board : MonoBehaviour {
     }
 
     //Switch and check the pieces
-    private bool SwitchAndCheck(int column, int row, Vector2 direction)
+    public bool SwitchAndCheck(int column, int row, Vector2 direction)
     {
         //switch piece up or down
         SwitchPieces(column, row, direction);
