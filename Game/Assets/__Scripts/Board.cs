@@ -26,10 +26,12 @@ public class Board : MonoBehaviour {
 
     private ScoreManager scoreManager;
     private int streakValue = 1;
+    private SoundManager soundManager;
 
     // Use this for initialization
     void Start () {
         scoreManager = FindObjectOfType<ScoreManager>();
+        soundManager = FindObjectOfType<SoundManager>();
         allTiles = new BackgroundTile[width, height]; //size of the grid
         allDots = new GameObject[width, height];
         SetUp();
@@ -111,6 +113,12 @@ public class Board : MonoBehaviour {
     {
         if (allDots[column, row].GetComponent<Dot>().isMatched)
         {
+            //Check if sound manager exists
+            if(soundManager != null)
+            {
+                soundManager.PlayRandomDestroyNoise();
+
+            }
             GameObject particle = Instantiate(destroyEffect, allDots[column, row].transform.position,Quaternion.identity);
             //Destroy the particle after .5f
             Destroy(particle, .5f);
