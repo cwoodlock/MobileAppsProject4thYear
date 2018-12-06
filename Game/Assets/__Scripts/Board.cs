@@ -26,11 +26,26 @@ public class Board : MonoBehaviour {
     public GameObject destroyEffect; //Used to import the particle effect to destroy the dots
     public int basePieceValue = 20;
     public int[] scoreGoals;
+    [Header("Scriptable")]
+    public World world;
+    public int level;
 
     private ScoreManager scoreManager;
     private int streakValue = 1;
     private SoundManager soundManager;
     private GoalManager goalManager;
+
+    private void Awake()
+    {
+        if(world != null)
+        {
+            if(world.levels[level] != null)
+            {
+                width = world.levels[level].width;
+                height = world.levels[level].height;
+            }
+        }
+    }
 
     // Use this for initialization
     void Start () {

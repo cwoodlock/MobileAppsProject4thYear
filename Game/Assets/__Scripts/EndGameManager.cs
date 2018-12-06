@@ -23,6 +23,8 @@ public class EndGameManager : MonoBehaviour {
     public Text counter;
     public int currentCounterValue;
     public EndGameRequirement requirements;
+    public GameObject youWinPanel;
+    public GameObject tryAgainPanel;
 
     private float timerSeconds;
     private Board board;
@@ -57,12 +59,27 @@ public class EndGameManager : MonoBehaviour {
             counter.text = "" + currentCounterValue;
             if (currentCounterValue <= 0)
             {
-                board.currentState = GameState.lose;
-                Debug.Log("You lose");
-                currentCounterValue = 0;
-                counter.text = "" + currentCounterValue;
+                LoseGame();
             }
         }
+    }
+
+    public void WinGame()
+    {
+        youWinPanel.SetActive(true);
+        board.currentState = GameState.win;
+        currentCounterValue = 0;
+        counter.text = "" + currentCounterValue;
+
+    }
+
+    public void LoseGame()
+    {
+        tryAgainPanel.SetActive(true);
+        board.currentState = GameState.lose;
+        Debug.Log("You lose");
+        currentCounterValue = 0;
+        counter.text = "" + currentCounterValue;
     }
 	
 	// Update is called once per frame

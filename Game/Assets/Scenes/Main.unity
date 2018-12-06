@@ -158,8 +158,10 @@ MonoBehaviour:
   counter: {fileID: 1044420178}
   currentCounterValue: 0
   requirements:
-    gameType: 1
-    counterValue: 20
+    gameType: 0
+    counterValue: 100
+  youWinPanel: {fileID: 131649313}
+  tryAgainPanel: {fileID: 1212512430}
 --- !u!1 &74607870
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &131649314
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2081,7 +2083,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15333332, y: 0.16000001}
   m_AnchorMax: {x: 0.84444445, y: 0.83500004}
-  m_AnchoredPosition: {x: 0.5, y: 1.9999695}
+  m_AnchoredPosition: {x: 0.5, y: 2}
   m_SizeDelta: {x: -9.200012, y: -3.8999023}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1212512432
@@ -2288,6 +2290,7 @@ MonoBehaviour:
     type: 2}
   basePieceValue: 20
   scoreGoals: d0070000a00f000088130000
+  world: {fileID: 11400000, guid: 1becf8aec62a5b04b89f87373d9e64bd, type: 2}
 --- !u!4 &1360978837
 Transform:
   m_ObjectHideFlags: 0
@@ -2891,7 +2894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1870207785
 RectTransform:
   m_ObjectHideFlags: 0

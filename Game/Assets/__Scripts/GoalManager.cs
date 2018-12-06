@@ -22,9 +22,12 @@ public class GoalManager : MonoBehaviour
     public GameObject goalIntroParent;
     public GameObject goalGameParent;
 
+    private EndGameManager endGameManager;
+
     // Use this for initialization
     void Start()
     {
+        endGameManager = FindObjectOfType<EndGameManager>();
         SetupGoals();
     }
 
@@ -65,6 +68,10 @@ public class GoalManager : MonoBehaviour
         }
         if (goalsCompleted >= levelGoals.Length)
         {
+            if(endGameManager != null)
+            {
+                endGameManager.WinGame();
+            }
             Debug.Log("You Win");
         }
 
