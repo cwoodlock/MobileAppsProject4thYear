@@ -6,7 +6,10 @@ using UnityEngine;
 public enum GameState
 {
     wait,
-    move
+    move,
+    win,
+    lose,
+    pause
 }
 
 public class Board : MonoBehaviour {
@@ -27,14 +30,17 @@ public class Board : MonoBehaviour {
     private ScoreManager scoreManager;
     private int streakValue = 1;
     private SoundManager soundManager;
+    private GoalManager goalManager;
 
     // Use this for initialization
     void Start () {
+        goalManager = FindObjectOfType<GoalManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         soundManager = FindObjectOfType<SoundManager>();
         allTiles = new BackgroundTile[width, height]; //size of the grid
         allDots = new GameObject[width, height];
         SetUp();
+        currentState = GameState.pause;
     }
 	
 	private void SetUp()
@@ -113,6 +119,11 @@ public class Board : MonoBehaviour {
     {
         if (allDots[column, row].GetComponent<Dot>().isMatched)
         {
+            if(goalManager != null)
+            {
+                goalManager.CompareGoal(allDots[column, row].tag.ToString());
+                goalManager.UpdateGoals();
+            }
             //Check if sound manager exists
             if(soundManager != null)
             {

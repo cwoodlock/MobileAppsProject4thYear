@@ -12,6 +12,7 @@ public class Dot : MonoBehaviour
     private Board board;
     private Vector2 tempPosition;
     private HintManager hintManager;
+    private EndGameManager endGameManager;
 
     public float swipeAngle = 0;
     public int column;
@@ -38,6 +39,7 @@ public class Dot : MonoBehaviour
         // previousRow = row;
         // previousColumn = column;
         hintManager = FindObjectOfType<HintManager>();
+        endGameManager = FindObjectOfType<EndGameManager>();
     }
 
     // Update is called once per frame
@@ -248,10 +250,18 @@ public class Dot : MonoBehaviour
                 board.currentState = GameState.move;
             }
             else
+            
+                if(endGameManager != null)
             {
+                if(endGameManager.requirements.gameType == GameType.Moves)
+                {
+                    endGameManager.DecreaseCounterValue();
+                }
+            }
                 board.DestroyMatches();
             }
             otherDot = null;
         } 
     }
-}
+
+
