@@ -2291,6 +2291,7 @@ MonoBehaviour:
   basePieceValue: 20
   scoreGoals: d0070000a00f000088130000
   world: {fileID: 11400000, guid: 1becf8aec62a5b04b89f87373d9e64bd, type: 2}
+  level: 2
 --- !u!4 &1360978837
 Transform:
   m_ObjectHideFlags: 0

@@ -14,4 +14,8 @@ public class Level : ScriptableObject {
 
     [Header("Score Goals")]
     public int[] scoreGoals;
+
+    [Header("EndGame Requirements")]
+    public EndGameRequirement endGameRequirement;
+    public BlankGoal[] levelGoals;
 }

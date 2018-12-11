@@ -41,8 +41,12 @@ public class Board : MonoBehaviour {
         {
             if(world.levels[level] != null)
             {
+                //Generate the specific level based on their attributes
                 width = world.levels[level].width;
                 height = world.levels[level].height;
+                dots = world.levels[level].dots;
+                scoreGoals = world.levels[level].scoreGoals;
+
             }
         }
     }

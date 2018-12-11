@@ -23,3 +23,11 @@ MonoBehaviour:
   - {fileID: 1002225173349416, guid: 95da6545140adaf45a24bd8c679bee11, type: 2}
   - {fileID: 1785121162325040, guid: 71af5929a73297c4aac042e48d10469b, type: 2}
   scoreGoals: d0070000a00f0000401f0000
+  endGameRequirement:
+    gameType: 0
+    counterValue: 30
+  levelGoals:
+  - numberNeeded: 10
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: a3c996ae0e0534246a0699b1692efb75, type: 3}
+    matchValue: GreyDot

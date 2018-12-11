@@ -32,7 +32,19 @@ public class EndGameManager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         board = FindObjectOfType<Board>();
+        SetGameType();
         SetupGame();
+    }
+
+    void SetGameType()
+    {
+        if(board.world != null)
+        {
+            if(board.world.levels[board.level] != null)
+            {
+                requirements = board.world.levels[board.level].endGameRequirement
+;            }
+        }
     }
 
     void SetupGame()
