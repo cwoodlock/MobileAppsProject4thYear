@@ -19,6 +19,9 @@ MonoBehaviour:
   - {fileID: 1884702908886618, guid: e026375384131594b81d9d6df165638e, type: 2}
   - {fileID: 1396189341042708, guid: 1584d3d1051d76949b76b249f47df438, type: 2}
   - {fileID: 1339421632801710, guid: 914b95fbf98bb6047a8b007e3ba68dba, type: 2}
+  - {fileID: 1377664362507212, guid: a9fd98e68596fbd41a668e1d1793e28f, type: 2}
+  - {fileID: 1002225173349416, guid: 95da6545140adaf45a24bd8c679bee11, type: 2}
+  - {fileID: 1785121162325040, guid: 71af5929a73297c4aac042e48d10469b, type: 2}
   scoreGoals: e803000088130000581b0000
   endGameRequirement:
     gameType: 1

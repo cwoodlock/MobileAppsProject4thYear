@@ -147,18 +147,18 @@ public class Dot : MonoBehaviour
     }
 
     void MovePieces()
-        //Send damien this code
+        //Send damien this code not working
     {
-        if ((swipeAngle > 135 && swipeAngle <= -135) && column > 0)
-        {
-            Debug.Log("Swipe left");
+        //if ((swipeAngle > 135 && swipeAngle <= -135) && column > 0)
+        //{
+          //  Debug.Log("Swipe left");
             //left swipe
-            otherDot = board.allDots[column - 1, row]; //get dot thats to the right
-            previousRow = row;
-            previousColumn = column;
-            otherDot.GetComponent<Dot>().column += 1; //get dot script for that dot and change the column
-            column -= 1; //increase selected dot
-        }
+            //otherDot = board.allDots[column - 1, row]; //get dot thats to the right
+            //previousRow = row;
+            //previousColumn = column;
+            //otherDot.GetComponent<Dot>().column += 1; //get dot script for that dot and change the column
+            //column -= 1; //increase selected dot
+        //}
         if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width -1)
         {
             Debug.Log("Swipe right");

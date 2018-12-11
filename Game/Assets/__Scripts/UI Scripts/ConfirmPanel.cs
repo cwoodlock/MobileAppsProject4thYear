@@ -7,16 +7,7 @@ using UnityEngine.SceneManagement;
 public class ConfirmPanel : MonoBehaviour {
 
     public string levelToLoad;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public int level;
 
     public void Cancel()
     {
@@ -25,6 +16,8 @@ public class ConfirmPanel : MonoBehaviour {
 
     public void Play()
     {
-        SceneManager.LoadScene(levelToLoad);
+        //used to set the level to load
+        PlayerPrefs.SetInt("Current level", level -1);
+        SceneManager.LoadScene("Main");
     }
 }

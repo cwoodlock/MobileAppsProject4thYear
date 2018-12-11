@@ -37,6 +37,12 @@ public class Board : MonoBehaviour {
 
     private void Awake()
     {
+        //Reset level to whatever is in playerprefs
+        if(PlayerPrefs.HasKey("Current level"))
+        {
+            level = PlayerPrefs.GetInt("Current level");
+        }
+
         if(world != null)
         {
             if(world.levels[level] != null)
